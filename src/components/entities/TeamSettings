@@ -1,0 +1,38 @@
+{
+  "name": "TeamSettings",
+  "type": "object",
+  "properties": {
+    "team_name": {
+      "type": "string",
+      "description": "Team name"
+    },
+    "season": {
+      "type": "string",
+      "description": "Current season"
+    },
+    "age_group": {
+      "type": "string",
+      "description": "Age group"
+    },
+    "location": {
+      "type": "string",
+      "description": "Team location"
+    },
+    "coach_name": {
+      "type": "string",
+      "description": "Head coach name"
+    },
+    "monthly_dues_amount": {
+      "type": "number",
+      "description": "Monthly dues amount in dollars"
+    },
+    "pitch_limit": {
+      "type": "number",
+      "description": "Daily pitch limit for this age group"
+    }
+  },
+  "required": [
+    "team_name",
+    "season"
+  ]
+}

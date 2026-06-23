@@ -1,38 +1,102 @@
-{
-  "name": "TeamSettings",
-  "type": "object",
-  "properties": {
-    "team_name": {
-      "type": "string",
-      "description": "Team name"
-    },
-    "season": {
-      "type": "string",
-      "description": "Current season"
-    },
-    "age_group": {
-      "type": "string",
-      "description": "Age group"
-    },
-    "location": {
-      "type": "string",
-      "description": "Team location"
-    },
-    "coach_name": {
-      "type": "string",
-      "description": "Head coach name"
-    },
-    "monthly_dues_amount": {
-      "type": "number",
-      "description": "Monthly dues amount in dollars"
-    },
-    "pitch_limit": {
-      "type": "number",
-      "description": "Daily pitch limit for this age group"
-    }
-  },
-  "required": [
-    "team_name",
-    "season"
-  ]
+import React, { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
+import { useToast } from "@/components/ui/use-toast";
+import { UserPlus } from "lucide-react";
+import InviteCoachDialog from "@/components/settings/InviteCoachDialog";
+import { useOutletContext } from "react-router-dom";
+
+export default function TeamSettingsPage() {
+  const { toast } = useToast();
+  const { settings: outletSettings } = useOutletContext();
+  const [settings, setSettings] = useState(null);
+  const [form, setForm] = useState({ team_name: "", season: "", age_group: "", location: "", coach_name: "", monthly_dues_amount: "", pitch_limit: "" });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [coachDialogOpen, setCoachDialogOpen] = useState(false);
+
+  useEffect(() => {
+    base44.entities.TeamSettings.list().then((data) => {
+      if (data.length > 0) {
+        setSettings(data[0]);
+        setForm({
+          team_name: data[0].team_name || "", season: data[0].season || "", age_group: data[0].age_group || "",
+          location: data[0].location || "", coach_name: data[0].coach_name || "",
+          monthly_dues_amount: data[0].monthly_dues_amount || "", pitch_limit: data[0].pitch_limit || "",
+        });
+      }
+      setLoading(false);
+    });
+  }, []);
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    const payload = { ...form, monthly_dues_amount: Number(form.monthly_dues_amount), pitch_limit: Number(form.pitch_limit) };
+    if (settings) await base44.entities.TeamSettings.update(settings.id, payload);
+    else { const created = await base44.entities.TeamSettings.create(payload); setSettings(created); }
+    setSaving(false);
+    toast({ title: "Settings saved", description: "Your team settings have been updated." });
+  };
+
+  if (loading) {
+    return <div className="flex items-center justify-center py-32"><div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin" /></div>;
+  }
+
+  return (
+    <div className="max-w-lg">
+      <h1 className="text-2xl font-bold text-slate-900 mb-1">Team Settings</h1>
+      <p className="text-slate-500 text-sm mb-8">Configure your team information</p>
+      <form onSubmit={handleSave} className="space-y-5">
+        <div>
+          <label className="text-xs font-medium text-slate-600 mb-1 block">Team Name *</label>
+          <input required value={form.team_name} onChange={(e) => setForm({ ...form, team_name: e.target.value })} className="w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-800/20" />
+        </div>
+        <div>
+          <label className="text-xs font-medium text-slate-600 mb-1 block">Season *</label>
+          <input required value={form.season} onChange={(e) => setForm({ ...form, season: e.target.value })} placeholder="e.g. Summer 2026" className="w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-800/20" />
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="text-xs font-medium text-slate-600 mb-1 block">Age Group</label>
+            <input value={form.age_group} onChange={(e) => setForm({ ...form, age_group: e.target.value })} placeholder="e.g. 9U Travel" className="w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-800/20" />
+          </div>
+          <div>
+            <label className="text-xs font-medium text-slate-600 mb-1 block">Location</label>
+            <input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} placeholder="e.g. Texas" className="w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-800/20" />
+          </div>
+        </div>
+        <div>
+          <label className="text-xs font-medium text-slate-600 mb-1 block">Head Coach Name</label>
+          <input value={form.coach_name} onChange={(e) => setForm({ ...form, coach_name: e.target.value })} placeholder="e.g. Coach Rivera" className="w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-800/20" />
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="text-xs font-medium text-slate-600 mb-1 block">Monthly Dues ($)</label>
+            <input type="number" value={form.monthly_dues_amount} onChange={(e) => setForm({ ...form, monthly_dues_amount: e.target.value })} placeholder="e.g. 150" className="w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-800/20" />
+          </div>
+          <div>
+            <label className="text-xs font-medium text-slate-600 mb-1 block">Daily Pitch Limit</label>
+            <input type="number" value={form.pitch_limit} onChange={(e) => setForm({ ...form, pitch_limit: e.target.value })} placeholder="e.g. 75" className="w-full px-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-800/20" />
+          </div>
+        </div>
+        <button type="submit" disabled={saving} className="px-6 py-2.5 bg-red-800 text-white rounded-lg text-sm font-medium hover:bg-red-900 transition disabled:opacity-50">
+          {saving ? "Saving..." : "Save Settings"}
+        </button>
+      </form>
+
+      <div className="mt-8 pt-8 border-t border-slate-100">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h2 className="text-lg font-bold text-slate-900">Coaches & Admins</h2>
+            <p className="text-slate-500 text-sm">Invite additional coaches to help manage the team</p>
+          </div>
+          <button onClick={() => setCoachDialogOpen(true)} className="inline-flex items-center gap-2 px-4 py-2 bg-red-800 text-white rounded-lg text-sm font-medium hover:bg-red-900 transition">
+            <UserPlus className="w-4 h-4" /> Invite Coach
+          </button>
+        </div>
+      </div>
+
+      <InviteCoachDialog open={coachDialogOpen} onClose={() => setCoachDialogOpen(false)} coachName={form.coach_name || outletSettings?.coach_name} />
+    </div>
+  );
 }

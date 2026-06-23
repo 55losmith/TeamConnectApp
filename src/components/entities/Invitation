@@ -9,6 +9,7 @@
     "app_role": {
       "type": "string",
       "enum": [
+        "coach",
         "parent",
         "follower"
       ],
@@ -38,8 +39,6 @@
   },
   "required": [
     "email",
-    "app_role",
-    "player_id",
-    "player_name"
+    "app_role"
   ]
 }

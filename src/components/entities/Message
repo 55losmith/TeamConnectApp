@@ -1,0 +1,47 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Message subject (for broadcasts)"
+    },
+    "body": {
+      "type": "string",
+      "description": "Message body text"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "broadcast",
+        "conversation"
+      ],
+      "description": "Type of message"
+    },
+    "thread_id": {
+      "type": "string",
+      "description": "Reference to Thread entity (for conversation messages)"
+    },
+    "sender_role": {
+      "type": "string",
+      "enum": [
+        "coach",
+        "parent"
+      ],
+      "description": "Role of the sender"
+    },
+    "sender_name": {
+      "type": "string",
+      "description": "Name of the sender"
+    },
+    "recipient_name": {
+      "type": "string",
+      "description": "Name of the recipient (for broadcasts or new conversations)"
+    }
+  },
+  "required": [
+    "body",
+    "message_type",
+    "sender_role"
+  ]
+}

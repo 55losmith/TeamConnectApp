@@ -1,3 +1,5 @@
-// src/components/ui/aspect-ratio.jsx
-import React from 'react';
-export default function AspectRatio(){return <div>AspectRatio (stub)</div>}
+import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio"
+
+const AspectRatio = AspectRatioPrimitive.Root
+
+export { AspectRatio }

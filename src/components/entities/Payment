@@ -1,0 +1,57 @@
+{
+  "name": "Payment",
+  "type": "object",
+  "properties": {
+    "player_name": {
+      "type": "string",
+      "description": "Player name"
+    },
+    "player_id": {
+      "type": "string",
+      "description": "Reference to Player entity ID"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Amount due in dollars"
+    },
+    "payment_type": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "tournament"
+      ],
+      "description": "Type of payment"
+    },
+    "description": {
+      "type": "string",
+      "description": "e.g. 'May Dues' or 'Memorial Day Tournament'"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date payment is due"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "paid",
+        "unpaid",
+        "waived"
+      ],
+      "default": "unpaid",
+      "description": "Payment status"
+    },
+    "paid_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date payment was made"
+    }
+  },
+  "required": [
+    "player_name",
+    "amount",
+    "payment_type",
+    "description",
+    "due_date"
+  ]
+}

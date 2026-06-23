@@ -1,0 +1,30 @@
+{
+  "name": "Thread",
+  "type": "object",
+  "properties": {
+    "parent_name": {
+      "type": "string",
+      "description": "Name of the parent in the conversation"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Conversation subject line"
+    },
+    "last_message_body": {
+      "type": "string",
+      "description": "Preview of last message"
+    },
+    "last_sender_role": {
+      "type": "string",
+      "enum": [
+        "coach",
+        "parent"
+      ],
+      "description": "Who sent the last message"
+    }
+  },
+  "required": [
+    "parent_name",
+    "subject"
+  ]
+}

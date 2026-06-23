@@ -1,0 +1,41 @@
+{
+  "name": "PitchLog",
+  "type": "object",
+  "properties": {
+    "player_name": {
+      "type": "string",
+      "description": "Player name"
+    },
+    "player_id": {
+      "type": "string",
+      "description": "Reference to Player entity ID"
+    },
+    "pitches_thrown": {
+      "type": "number",
+      "description": "Number of pitches thrown in this outing"
+    },
+    "log_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the pitching outing"
+    },
+    "event_title": {
+      "type": "string",
+      "description": "Associated event name"
+    },
+    "rest_days_required": {
+      "type": "number",
+      "description": "Calculated rest days required"
+    },
+    "eligible_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date player is eligible to pitch again"
+    }
+  },
+  "required": [
+    "player_name",
+    "pitches_thrown",
+    "log_date"
+  ]
+}

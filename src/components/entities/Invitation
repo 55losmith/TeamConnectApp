@@ -1,0 +1,45 @@
+{
+  "name": "Invitation",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Email of the invited user"
+    },
+    "app_role": {
+      "type": "string",
+      "enum": [
+        "parent",
+        "follower"
+      ],
+      "description": "Role to assign when invitation is accepted"
+    },
+    "player_id": {
+      "type": "string",
+      "description": "Player this user is linked to"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Cached player name"
+    },
+    "invited_by_name": {
+      "type": "string",
+      "description": "Name of the person who sent the invite"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted"
+      ],
+      "default": "pending",
+      "description": "Whether the invitation has been accepted"
+    }
+  },
+  "required": [
+    "email",
+    "app_role",
+    "player_id",
+    "player_name"
+  ]
+}

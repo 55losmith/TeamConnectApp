@@ -1,0 +1,72 @@
+{
+  "name": "Event",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Event title"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "practice",
+        "game",
+        "tournament"
+      ],
+      "description": "Type of event"
+    },
+    "event_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time of the event"
+    },
+    "location": {
+      "type": "string",
+      "description": "Venue or field name"
+    },
+    "opponent": {
+      "type": "string",
+      "description": "Opponent team name (for games)"
+    },
+    "home_or_away": {
+      "type": "string",
+      "enum": [
+        "Home",
+        "Away"
+      ],
+      "description": "Home or away game"
+    },
+    "team_score": {
+      "type": "number",
+      "description": "Our team's score"
+    },
+    "opponent_score": {
+      "type": "number",
+      "description": "Opponent's score"
+    },
+    "game_result": {
+      "type": "string",
+      "enum": [
+        "Win",
+        "Loss",
+        "Tie",
+        "Scheduled"
+      ],
+      "description": "Game result"
+    },
+    "innings": {
+      "type": "number",
+      "description": "Number of innings played"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes"
+    }
+  },
+  "required": [
+    "title",
+    "event_type",
+    "event_date",
+    "location"
+  ]
+}

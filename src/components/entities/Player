@@ -1,0 +1,83 @@
+{
+  "name": "Player",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Player full name"
+    },
+    "jersey_number": {
+      "type": "number",
+      "description": "Jersey number"
+    },
+    "primary_position": {
+      "type": "string",
+      "enum": [
+        "Pitcher",
+        "Catcher",
+        "First Base",
+        "Second Base",
+        "Third Base",
+        "Shortstop",
+        "Left Field",
+        "Center Field",
+        "Right Field",
+        "DH",
+        "Utility"
+      ],
+      "description": "Primary baseball position"
+    },
+    "secondary_position": {
+      "type": "string",
+      "enum": [
+        "Pitcher",
+        "Catcher",
+        "First Base",
+        "Second Base",
+        "Third Base",
+        "Shortstop",
+        "Left Field",
+        "Center Field",
+        "Right Field",
+        "DH",
+        "Utility",
+        "None"
+      ],
+      "description": "Secondary baseball position"
+    },
+    "parent_names": {
+      "type": "string",
+      "description": "Comma-separated parent/guardian names"
+    },
+    "parent_email": {
+      "type": "string",
+      "description": "Parent email"
+    },
+    "parent_phone": {
+      "type": "string",
+      "description": "Parent phone number"
+    },
+    "batting_hand": {
+      "type": "string",
+      "enum": [
+        "Right",
+        "Left",
+        "Switch"
+      ],
+      "description": "Batting hand"
+    },
+    "throwing_hand": {
+      "type": "string",
+      "enum": [
+        "Right",
+        "Left"
+      ],
+      "description": "Throwing hand"
+    }
+  },
+  "required": [
+    "name",
+    "jersey_number",
+    "primary_position"
+  ]
+}
